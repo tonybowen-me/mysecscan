@@ -1,0 +1,6 @@
+flask==1.1.1          
+requests==2.19.1      
+urllib3==1.24.1       
+django==1.11.23       
+jinja2==2.10.1
+celery==5.2.2 \ --hash=sha256:85858583n3nfnfn383fhagf9f9fj393jf93n3nsnsns9s9sns9s9fghfb289202fksd9fs89 \ --hash=sha256:854jg9dfjkf9239ufnsadf98j234r9u8hnsadg9078h23r97h23r89uhasdf97h  
