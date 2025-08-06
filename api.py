@@ -59,7 +59,15 @@ async def scan(file: UploadFile = File(...), ecosystem: str = Form("PyPI")):
 @router.get("/secscan", include_in_schema=False)
 def secscan(request: Request):
     return templates.TemplateResponse("secscan.html", {"request": request})
-
+    
+@router.get("/result-mockup", include_in_schema=False)
+def mock_scan(request: Request):
+    return templates.TemplateResponse("result_mockup.html", {"request": request})
+    
+@router.get("/submit-mockup", include_in_schema=False)
+def mock_scan(request: Request):
+    return templates.TemplateResponse("submit_mockup.html", {"request": request})
+    
 @router.get("/scan/{scan_id}", response_class=HTMLResponse)
 def view_scan(scan_id: str, request: Request):
     db = SessionLocal()

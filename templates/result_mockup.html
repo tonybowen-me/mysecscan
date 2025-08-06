@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Security Scan Report – mysecscan</title>
+  <style>
+	#protectedReport.locked {
+	filter: blur(6px);
+	pointer-events: none;
+	user-select: none;
+	}
+	#protectedReport {
+	transition: filter 0.3s ease;
+	}
+
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f9fafa;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+
+    .report-container {
+      background: #fff;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      max-width: 1000px;
+      margin: auto;
+      border-left: 6px solid #4a90e2;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .meta, .summary {
+      font-size: 0.9rem;
+      color: #555;
+      margin-bottom: 1rem;
+    }
+
+    .summary {
+      background: #f1f6ff;
+      padding: 1rem;
+      border-radius: 6px;
+      border: 1px solid #cfe2ff;
+      margin-bottom: 2rem;
+    }
+
+    .summary strong {
+      display: inline-block;
+      min-width: 140px;
+      font-weight: 600;
+    }
+
+    .severity-box {
+      margin-top: 1rem;
+    }
+
+    .severity-pill {
+      display: inline-block;
+      background: #eee;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      margin-right: 0.5rem;
+      font-weight: bold;
+    }
+
+    .crit { background: #ffe1e1; color: #b00000; }
+    .high { background: #fff3cd; color: #856404; }
+    .med  { background: #d1ecf1; color: #0c5460; }
+    .low  { background: #e2e3e5; color: #6c757d; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    th {
+      background: #f4f6f8;
+    }
+
+    .severity-high { color: #d93025; font-weight: bold; }
+    .severity-critical { color: #e65100; font-weight: bold; }
+    .vuln { color: #b00020; font-weight: bold; }
+    .fix { color: #0b8043; }
+    code {
+      font-family: monospace;
+      background: #eee;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #777;
+      border-top: 1px solid #eee;
+      padding-top: 1rem;
+    }
+
+    .osv-details {
+      background: #fefefe;
+      border-left: 4px solid #ccc;
+      padding: 1rem;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<script>
+  const correctKey = "DNKML123"; // 🔐 Your hardcoded access key
+
+	function validateAccess() {
+	const enteredKey = document.getElementById("accessInput").value;
+	const error = document.getElementById("errorMessage");
+
+	if (enteredKey === correctKey) {
+		document.getElementById("accessModal").style.display = "none";
+		document.getElementById("protectedReport").classList.remove("locked");
+		document.getElementById("protectedReport").style.display = "block";
+		error.style.display = "none";
+		document.body.classList.remove("locked");
+	} else {
+		error.style.display = "block";
+	}
+	}
+
+
+  // Optional: focus on input immediately
+window.onload = () => {
+  document.getElementById("protectedReport").classList.add("locked");
+  document.getElementById("accessInput").focus();
+};
+
+
+</script>
+<body>
+	<div id="accessModal" style="
+		position: fixed;
+		top: 0; left: 0; right: 0; bottom: 0;
+		background: rgba(0,0,0,0.75);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 1000;
+		">
+	<div style="
+		background: white;
+		padding: 2rem;
+		border-radius: 8px;
+		box-shadow: 0 0 20px rgba(0,0,0,0.2);
+		text-align: center;
+		width: 300px;
+	">
+		<h2>🔒 Access Required</h2>
+		<p>Please enter your access key:</p>
+		<input type="password" id="accessInput" style="padding: 0.5rem; width: 100%; margin-top: 0.5rem;" placeholder="Access key" />
+		<button onclick="validateAccess()" style="
+		margin-top: 1rem;
+		padding: 0.5rem 1rem;
+		background: #4a90e2;
+		color: white;
+		border: none;
+		border-radius: 4px;
+		cursor: pointer;
+		">Unlock Report</button>
+		<p id="errorMessage" style="color: red; margin-top: 0.75rem; display: none;">❌ Invalid key</p>
+	</div>
+	</div>
+	<div id="protectedReport" class="report-container" style="display: none;">
+
+    <h1>📄 Vulnerability Report: <strong>Dynamic Pricing</strong></h1>
+
+    <div class="meta">
+      <strong>Scan ID:</strong> 035c66cb-3c3f-45ba-bb43-013cce127679<br>
+      <strong>Scanned:</strong> 3 times<br>
+      <strong>Generated on:</strong> August 6, 2025 at 9:32 AM<br>
+      <strong>Submitted by:</strong> contact@tonybowen.me<br>
+	  <strong>Ecosystem scan:</strong> PyPI<br>
+	  <strong>File scanned:</strong> requirements.txt<br>
+      <strong>Access Key:</strong> <code>••••••••</code>
+    </div>
+
+    <div class="summary">
+      <strong>Vulnerability Summary:</strong><br>
+      <span class="severity-pill crit">🔥 Critical: 3</span>
+      <span class="severity-pill high">🔴 High: 4</span>
+      <span class="severity-pill med">🟡 Medium: 0</span>
+      <span class="severity-pill low">🟢 Low: 0</span>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Package</th>
+          <th>Status</th>
+          <th>Fix Version</th>
+          <th>Severity</th>
+          <th>CVSS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>flask==1.1.1</code></td>
+          <td class="vuln">❌ Vulnerable</td>
+          <td class="fix">2.3.2</td>
+          <td class="severity-high">🔴 High</td>
+          <td>7.5</td>
+        </tr>
+        <tr>
+          <td><code>requests==2.19.1</code></td>
+          <td class="vuln">❌ Vulnerable</td>
+          <td class="fix">2.32.4</td>
+          <td class="severity-high">🔴 High</td>
+          <td>7.5</td>
+        </tr>
+        <tr>
+          <td><code>urllib3==1.24.1</code></td>
+          <td class="vuln">❌ Vulnerable</td>
+          <td class="fix">2.5.0</td>
+          <td class="severity-high">🔴 High</td>
+          <td>8.1</td>
+        </tr>
+        <tr>
+          <td><code>django==1.11.23</code></td>
+          <td class="vuln">❌ Vulnerable</td>
+          <td class="fix">5.2.2</td>
+          <td class="severity-critical">🔥 Critical</td>
+          <td>9.8</td>
+        </tr>
+        <tr>
+          <td><code>jinja2==2.10.1</code></td>
+          <td class="vuln">❌ Vulnerable</td>
+          <td class="fix">3.1.6</td>
+          <td class="severity-high">🔴 High</td>
+          <td>7.8</td>
+        </tr>
+        <tr>
+          <td><code>pillow==6.2.0</code></td>
+          <td class="vuln">❌ Vulnerable</td>
+          <td class="fix">27.0.0-beta.2</td>
+          <td class="severity-critical">🔥 Critical</td>
+          <td>9.8</td>
+        </tr>
+        <tr>
+          <td><code>pyyaml==4.2b1</code></td>
+          <td class="vuln">❌ Vulnerable</td>
+          <td class="fix">5.4</td>
+          <td class="severity-critical">🔥 Critical</td>
+          <td>9.8</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="osv-details">
+      <strong>📌 Vulnerability Insight:</strong><br><br>
+      <strong>pyyaml 4.2b1:</strong> This version allows arbitrary code execution when loading untrusted YAML due to unsafe deserialization behavior in the default loader. CVE-2017-18342 recommends upgrading to a safe version with proper loader separation.
+      <br><br>
+      <strong>django 1.11.23:</strong> A remote attacker can exploit session exposure and lack of CSRF protection due to outdated security middleware. CVE-2019-19844 is a critical-rated vulnerability.
+    </div>
+
+    <p class="footer-note">
+      This report was generated by <strong>mysecscan</strong>. Please ensure that access is restricted to authorized users using your assigned access key.
+    </p>
+  </div>
+
+</body>
+</html>
