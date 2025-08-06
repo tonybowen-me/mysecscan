@@ -98,7 +98,7 @@
     <div class="section">
         <h2>Try it with curl</h2>
         <p>Example curl command for PyPI:</p>
-        <pre>curl -X POST http://hookcrate.io/scan -F "file=@requirements.txt" -F "ecosystem=PyPI"</pre>
+        <pre>curl -F "file=@requirements.txt" -F "ecosystem=PyPI" https://hookcrate.io/scan</pre>
     </div>
 
     {% if scan_url %}
