@@ -1,11 +1,73 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Scan {{ scan_id }}</title>
+  <meta charset="UTF-8">
+  <title>Scan {{ scan_id }} – Hookcrate</title>
+  <style>
+    /* Dark tokens */
+    :root {
+      --bg:#0f172a;
+      --surface:#111827;
+      --surface-2:#1f2937;
+      --border:#334155;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --brand:#2563eb;
+      --brand-2:#60a5fa;
+    }
+
+    body {
+      margin:0;
+      padding:32px;
+      font-family:Inter,system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+    }
+
+    h2 {
+      font-size:24px;
+      font-weight:800;
+      margin-bottom:16px;
+    }
+
+    .card {
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:20px;
+    }
+
+    pre {
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:16px;
+      font-family:ui-monospace,monospace;
+      font-size:14px;
+      color:#f8fafc;
+      overflow-x:auto;
+      line-height:1.6;
+    }
+
+    a.back {
+      display:inline-block;
+      margin-bottom:20px;
+      text-decoration:none;
+      color:var(--brand-2);
+      font-weight:600;
+    }
+    a.back:hover { color:#93c5fd; }
+  </style>
 </head>
 <body>
-    <h2>Scan {{ scan_id }}</h2>
+
+  <a href="/secscan" class="back">← Back to Scanner</a>
+  <h2>Scan {{ scan_id }}</h2>
+
+  <div class="card">
     <pre>{{ scan.results.report }}</pre>
+  </div>
+
 </body>
 </html>
