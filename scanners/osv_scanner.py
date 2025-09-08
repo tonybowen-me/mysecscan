@@ -8,6 +8,8 @@ def query_osv(package_name, version, ecosystem="PyPI"):
             "ecosystem": ecosystem
         }
     }
+    print(f"Ecosystem = {ecosystem}, packageName =  {package_name}, version= {version}")        
+
     response = requests.post("https://api.osv.dev/v1/query", json=payload)
     if response.status_code == 200:
         return response.json().get("vulns", [])

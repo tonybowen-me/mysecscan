@@ -1,124 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Vulnerability Scan – Hookcrate</title>
-    <style>
-        body {
-            font-family: system-ui, sans-serif;
-            margin: 0;
-            padding: 2rem;
-            background: #f9fafa;
-            color: #333;
-        }
+  <meta charset="UTF-8">
+  <title>Vulnerability Scan – Hookcrate</title>
+  <style>
+    /* Dark theme tokens */
+    :root {
+      --bg:#0f172a;
+      --surface:#111827;
+      --surface-2:#1f2937;
+      --border:#334155;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --brand:#2563eb;
+      --brand-2:#60a5fa;
+    }
 
-        h1 {
-            font-size: 1.75rem;
-            margin-bottom: 1rem;
-        }
+    body {
+      margin:0;
+      padding:32px;
+      font-family:Inter,system-ui,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+    }
 
-        .section {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-left: 4px solid #4a90e2;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 6px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-        }
+    h1 {
+      font-size:28px;
+      font-weight:800;
+      margin-bottom:24px;
+    }
+    h2 {
+      font-size:22px;
+      font-weight:700;
+      margin:0 0 12px;
+    }
+    p { color:var(--muted); line-height:1.6; }
 
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
+    .section {
+      background:var(--surface-2);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:20px;
+      margin-bottom:28px;
+    }
 
-        input[type="file"],
-        select {
-            padding: 0.5rem;
-            font-size: 1rem;
-            width: 100%;
-        }
+    form {
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      margin-top:14px;
+    }
 
-        button {
-            padding: 0.75rem;
-            background: #4a90e2;
-            color: white;
-            font-size: 1rem;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            width: fit-content;
-        }
+    input[type="file"], select {
+      padding:10px;
+      font-size:15px;
+      border:1px solid var(--border);
+      border-radius:8px;
+      background:var(--surface);
+      color:var(--text);
+    }
 
-        button:hover {
-            background: #357bd8;
-        }
+    input[type="file"]::file-selector-button {
+      padding:8px 12px;
+      margin-right:10px;
+      border:none;
+      border-radius:6px;
+      background:var(--brand);
+      color:white;
+      font-weight:600;
+      cursor:pointer;
+    }
 
-        pre {
-            background: #f4f4f4;
-            padding: 1rem;
-            border-radius: 4px;
-            font-family: monospace;
-            overflow-x: auto;
-        }
+    button {
+      background:var(--brand);
+      color:white;
+      font-size:15px;
+      font-weight:600;
+      padding:12px 18px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      width:fit-content;
+    }
+    button:hover { filter:brightness(1.1); }
 
-        .copy-wrap {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
+    pre {
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:14px;
+      font-family:ui-monospace,monospace;
+      font-size:14px;
+      overflow-x:auto;
+      color:#f8fafc;
+    }
 
-        input[type="text"] {
-            flex: 1;
-            font-family: monospace;
-            padding: 0.5rem;
-        }
-    </style>
+    .copy-wrap {
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    }
+    input[type="text"] {
+      flex:1;
+      font-family:monospace;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px;
+      padding:10px;
+      color:var(--text);
+    }
+  </style>
 </head>
 <body>
 
-    <h1>🔒 Vulnerability Scanner</h1>
+  <h1>🔒 Vulnerability Scanner</h1>
 
-    <div class="section">
-        <p>Upload a dependency file (e.g. <code>requirements.txt</code>) and choose your ecosystem. We'll scan it for known vulnerabilities using our secure backend.</p>
+  <div class="section">
+    <p>Upload a dependency file (e.g. <code>requirements.txt</code>) and choose your ecosystem. We'll scan it for known vulnerabilities using our secure backend.</p>
 
-        <form action="/scan" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <select name="ecosystem">
-                <option value="PyPI">PyPI (Python)</option>
-                <option value="npm">npm (JavaScript)</option>
-                <option value="Maven">Maven (Java)</option>
-            </select>
-            <button type="submit">📄 Upload and Scan</button>
-        </form>
+    <form action="/scan" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" required>
+      <select name="ecosystem">
+        <option value="PyPI">PyPI (Python)</option>
+        <option value="npm">npm (JavaScript)</option>
+        <option value="Maven">Maven (Java)</option>
+      </select>
+      <button type="submit">📄 Upload and Scan</button>
+    </form>
+  </div>
+
+  <div class="section">
+    <h2>Try it with curl</h2>
+    <p>Example curl command for PyPI:</p>
+    <pre>curl -F "file=@requirements.txt" -F "ecosystem=PyPI" https://hookcrate.io/scan</pre>
+  </div>
+
+  {% if scan_url %}
+  <div class="section">
+    <h2>🔗 View Your Scan</h2>
+    <div class="copy-wrap">
+      <input type="text" id="scanUrl" value="{{ scan_url }}" readonly>
+      <button onclick="copyScanUrl()">📋 Copy</button>
     </div>
+  </div>
 
-    <div class="section">
-        <h2>Try it with curl</h2>
-        <p>Example curl command for PyPI:</p>
-        <pre>curl -F "file=@requirements.txt" -F "ecosystem=PyPI" https://hookcrate.io/scan</pre>
-    </div>
-
-    {% if scan_url %}
-    <div class="section">
-        <h2>🔗 View Your Scan</h2>
-        <div class="copy-wrap">
-            <input type="text" id="scanUrl" value="{{ scan_url }}" readonly>
-            <button onclick="copyScanUrl()">📋 Copy</button>
-        </div>
-    </div>
-
-    <script>
-        function copyScanUrl() {
-            const input = document.getElementById("scanUrl");
-            input.select();
-            document.execCommand("copy");
-            alert("Scan URL copied to clipboard!");
-        }
-    </script>
-    {% endif %}
+  <script>
+    function copyScanUrl() {
+      const input = document.getElementById("scanUrl");
+      input.select();
+      document.execCommand("copy");
+      alert("Scan URL copied to clipboard!");
+    }
+  </script>
+  {% endif %}
 
 </body>
 </html>
